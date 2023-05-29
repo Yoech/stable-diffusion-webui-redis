@@ -34,23 +34,21 @@ class Scripts(scripts.Script):
             return True
 
         for i in range(len(processed.images)):
-            # Extract image information
-            regex = r"Steps:.*$"
-
-            info = re.findall(regex, processed.info, re.M)[0]
-            input_dict = dict(item.split(": ") for item in str(info).split(", "))
-
             image = processed.images[i]
             buffer = BytesIO()
             image.save(buffer, "png")
             image_bytes = buffer.getvalue()
             base64_image = base64.b64encode(image_bytes).decode('ascii')
             print(f"bytes_size={len(image_bytes)},base64_size={len(base64_image)}")
-
-            collection.hmset(self, "RS:B:100:dict", input_dict)
             collection.hmset(self, "RS:B:100:image", base64_image)
 
+        regex = r"Steps:.*$"
+        info = re.findall(regex, processed.info, re.M)[0]
+        input_dict = dict(item.split(": ") for item in str(info).split(", "))
+        collection.hmset(self, "RS:B:100:info", info)
+
+        processed.info = None
         processed.images = None
         collection.hmset(self, "RS:B:100:processed", processed)
-        
+
         return True
