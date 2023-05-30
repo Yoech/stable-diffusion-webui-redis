@@ -35,7 +35,7 @@ class Scripts(scripts.Script):
                     port = gr.inputs.Textbox(label="port", default=redis_port)
                     db = gr.inputs.Textbox(label="db", default=redis_db)
                     password = gr.inputs.Textbox(label="password", default=redis_auth)
-        return checkbox_save_to_redis, host, port, db, password
+        return [checkbox_save_to_redis, host, port, db, password]
 
     def postprocess(self, p, processed, checkbox_save_to_redis, host, port, db, password):
         print(f"postprocess ---> Save2Redis[{redis_save}]")
