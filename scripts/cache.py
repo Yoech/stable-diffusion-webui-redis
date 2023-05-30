@@ -7,8 +7,9 @@ import modules.scripts as scripts
 import gradio as gr
 
 
-def get_collection(host: str = '127.0.0.1', port: int = 6379, db: int = 0, password: str = '', max_connections: int = 10):
-    conn_pool = redis.ConnectionPool(host=host, port=port, db=db, password=password, max_connections=max_connections)
+def get_collection(host: str = '127.0.0.1', port: int = 6379, db: int = 0, password: str = ''):
+    print(f"get_collection--->host[{host}].port[{port}].db[{db}].password[{password}]")
+    conn_pool = redis.ConnectionPool(host=host, port=port, db=db, password=password, max_connections=10)
     return redis.Redis(connection_pool=conn_pool)
 
 
@@ -25,11 +26,11 @@ class Scripts(scripts.Script):
         port = gr.inputs.Textbox(label="port", default=6379)
         db = gr.inputs.Textbox(label="db", default=0)
         password = gr.inputs.Textbox(label="password", default="")
-        max_connections = gr.inputs.Textbox(label="max_connections", default=10)
-        return [checkbox_save_to_redis, host, port, db, password, max_connections]
+        return [checkbox_save_to_redis, host, port, db, password]
 
-    def postprocess(self, p, processed, checkbox_save_to_redis, host, port, db, password, max_connections):
-        collection = get_collection(host, port, db, password, max_connections) if checkbox_save_to_redis else None
+    def postprocess(self, p, processed, checkbox_save_to_redis, host, port, db, password):
+        print(f"host[{host}].port[{port}].db[{db}].password[{password}]")
+        collection = get_collection(host, port, db, password) if checkbox_save_to_redis else None
         if collection is None:
             return True
 
