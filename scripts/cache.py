@@ -31,11 +31,11 @@ class Scripts(scripts.Script):
         with gr.Group():
             with gr.Accordion("Redis Configure", open=True):
                 with gr.Row():
-                    checkbox_save_to_redis = gr.Checkbox(label="Enable", interactive=True, value=bool(redis_save))
-                    host = gr.inputs.Textbox(label="Host", default=redis_host)
-                    port = gr.inputs.Textbox(label="Port", default=redis_port)
-                    db = gr.inputs.Textbox(label="Db", default=redis_db)
-                    password = gr.inputs.Textbox(label="Password", default=redis_auth)
+                    checkbox_save_to_redis = gr.Checkbox(label="Enable", value=bool(redis_save))
+                    host = gr.Textbox(label="Host", default=redis_host)
+                    port = gr.Textbox(label="Port", default=redis_port)
+                    db = gr.Textbox(label="Db", default=redis_db)
+                    password = gr.Textbox(label="Password", default=redis_auth)
         return [checkbox_save_to_redis, host, port, db, password]
 
     def postprocess(self, p, processed, checkbox_save_to_redis, host, port, db, password):
