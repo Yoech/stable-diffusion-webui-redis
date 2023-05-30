@@ -12,6 +12,7 @@ redis_port = os.environ.get('REDIS_PORT', 6379)
 redis_db = os.environ.get('REDIS_DB', 0)
 redis_auth = os.environ.get('REDIS_AUTH', '')
 
+
 def get_collection(host: str = '127.0.0.1', port: int = 6379, db: int = 0, password: str = ''):
     conn_pool = redis.ConnectionPool(host=host, port=port, db=db, password=password, max_connections=10)
     return redis.Redis(connection_pool=conn_pool)
@@ -30,11 +31,11 @@ class Scripts(scripts.Script):
         with gr.Group():
             with gr.Accordion("Redis Configure", open=True):
                 with gr.Row():
-                    checkbox_save_to_redis = gr.Checkbox(label="Enable", default=redis_save)
-                    host = gr.inputs.Textbox(label="host", default=redis_host)
-                    port = gr.inputs.Textbox(label="port", default=redis_port)
-                    db = gr.inputs.Textbox(label="db", default=redis_db)
-                    password = gr.inputs.Textbox(label="password", default=redis_auth)
+                    checkbox_save_to_redis = gr.Checkbox(label="Enable", value=redis_save)
+                    host = gr.inputs.Textbox(label="Host", default=redis_host)
+                    port = gr.inputs.Textbox(label="Port", default=redis_port)
+                    db = gr.inputs.Textbox(label="Db", default=redis_db)
+                    password = gr.inputs.Textbox(label="Password", default=redis_auth)
         return [checkbox_save_to_redis, host, port, db, password]
 
     def postprocess(self, p, processed, checkbox_save_to_redis, host, port, db, password):
