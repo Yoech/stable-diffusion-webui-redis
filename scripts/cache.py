@@ -31,7 +31,7 @@ class Scripts(scripts.Script):
         with gr.Group():
             with gr.Accordion("Redis Configure", open=True):
                 with gr.Row():
-                    checkbox_save_to_redis = gr.Checkbox(label="Enable", value=redis_save)
+                    checkbox_save_to_redis = gr.Checkbox(label="Enable", interactive=True, value=bool(redis_save))
                     host = gr.inputs.Textbox(label="Host", default=redis_host)
                     port = gr.inputs.Textbox(label="Port", default=redis_port)
                     db = gr.inputs.Textbox(label="Db", default=redis_db)
