@@ -6,7 +6,7 @@ import redis
 import modules.scripts as scripts
 import gradio as gr
 
-redis_save = os.environ.get('REDIS_SAVE', False)
+redis_save = os.environ.get('REDIS_SAVE', False) == True
 redis_host = os.environ.get('REDIS_HOST', '127.0.0.1')
 redis_port = os.environ.get('REDIS_PORT', 6379)
 redis_db = os.environ.get('REDIS_DB', 0)
@@ -31,7 +31,7 @@ class Scripts(scripts.Script):
         with gr.Group():
             with gr.Accordion("Redis Configure", open=True):
                 with gr.Row():
-                    checkbox_save_to_redis = gr.Checkbox(label="Enable", value=bool(redis_save))
+                    checkbox_save_to_redis = gr.Checkbox(label="Enable", value=redis_save)
                     host = gr.Textbox(label="Host", value=redis_host)
                     port = gr.Textbox(label="Port", value=redis_port)
                     db = gr.Textbox(label="Db", value=redis_db)
