@@ -46,14 +46,17 @@ class Scripts(scripts.Script):
                         db = gr.Textbox(label="Db", value=redis_db)
                         # password = gr.inputs.Textbox(label="Password", default=redis_auth)
                         password = gr.Textbox(label="Password", value=redis_auth)
-        return [checkbox_save_to_redis, host, port, db, password]
+                    with gr.Row():
+                        prefix = gr.Textbox(label="Prefix", value="RS:B:")
+        return [checkbox_save_to_redis, host, port, db, password, prefix]
 
-    def postprocess(self, p, processed, checkbox_save_to_redis, host, port, db, password):
+    def postprocess(self, p, processed, checkbox_save_to_redis, host, port, db, password, prefix):
         print(f"------------>checkbox_save_to_redis[{checkbox_save_to_redis}]")
         print(f"------------>host[{host}]")
         print(f"------------>port[{port}]")
         print(f"------------>db[{db}]")
         print(f"------------>password[{password}]")
+        print(f"------------>prefix[{prefix}]")
         collection = get_collection(host, port, db, password) if checkbox_save_to_redis else None
         if collection is None:
             return True
@@ -86,7 +89,7 @@ class Scripts(scripts.Script):
         # info = re.findall(regex, processed.info, re.M)[0]
         # input_dict = dict(item.split(": ") for item in str(info).split(", "))
         # collection.hmset("RS:B:100:info", {"full": full, "info": info, "json": json.dumps(input_dict)})
-        collection.hmset("RS:B:100:info", {"full": full})
+        collection.hmset(str(prefix) + str(processed.seed), {"full": full})
 
         print(f"postprocess ---> Save2Redis.completed!")
         return True
