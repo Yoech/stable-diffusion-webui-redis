@@ -71,8 +71,8 @@ class Scripts(scripts.Script):
             processed.infotexts = processed.infotexts[1:len(processed.infotexts)]
 
         fmt = "png"
-        if opts.samples_format.toLowerCase() != "png":
-            fmt = opts.samples_format.toLowerCase()
+        if opts.samples_format.lower() != "png":
+            fmt = opts.samples_format.lower()
 
         for i in range(len(processed.images)):
             image = processed.images[i]
