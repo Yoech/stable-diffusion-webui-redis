@@ -56,7 +56,7 @@ class Scripts(scripts.Script):
         print(f"------------>db[{db}]")
         print(f"------------>pwd[{pwd}]")
         print(f"------------>prefix[{prefix}]")
-        collection = get_collection(host, port, db, password) if checkbox_save_to_redis else None
+        collection = get_collection(host, port, db, pwd) if checkbox_save_to_redis else None
         if collection is None:
             return True
 
