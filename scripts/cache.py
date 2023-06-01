@@ -62,7 +62,7 @@ class Scripts(scripts.Script):
 
         # opts.return_grid==true
         if len(processed.images) == len(processed.all_seeds) + 1:
-            processed.images = processed.images[:1]
+            processed.images = processed.images[1:len(processed.images)]
             print(f"------------>processed.images.length resize")
 
         for i in range(len(processed.images)):
