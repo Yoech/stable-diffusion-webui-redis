@@ -67,7 +67,7 @@ class Scripts(scripts.Script):
             # seed = processed.all_seeds[i]
             # subseed = processed.all_subseeds[i]
             # print(f"image[{i}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.base64_size={len(base64_image)}")
-            print(f"image[{i}].bytes_size={len(image_bytes)}.base64_size={len(base64_image)}.last_bytes=[{image_bytes[len(image_bytes)-20:8].hex(' ')}]")
+            print(f"image[{i}].bytes_size={len(image_bytes)}.base64_size={len(base64_image)}.last_bytes=[{image_bytes[len(image_bytes)-20:len(image_bytes)-12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
 
