@@ -63,7 +63,8 @@ class Scripts(scripts.Script):
         # opts.return_grid==true
         if len(processed.images) == len(processed.all_seeds) + 1:
             processed.images = processed.images[1:len(processed.images)]
-            print(f"------------>processed.images.length resize")
+            processed.infotexts = processed.infotexts[1:len(processed.infotexts)]
+            # print(f"------------>processed.images.length resize")
 
         for i in range(len(processed.images)):
             image = processed.images[i]
@@ -73,7 +74,7 @@ class Scripts(scripts.Script):
             # base64_image = base64.b64encode(image_bytes).decode('ascii')
             seed = processed.all_seeds[i]
             subseed = processed.all_subseeds[i]
-            print(f"image[{i}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.first_bytes=[{image_bytes[:16].hex(' ')}].last_bytes=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
+            print(f"image[{i}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
 
@@ -81,9 +82,9 @@ class Scripts(scripts.Script):
         print(f"postprocess --------------")
         print(f"processed => {full}")
         print(f"--------------------------")
-        regex = r"Steps:.*$"
-        info = re.findall(regex, processed.info, re.M)[0]
-        input_dict = dict(item.split(": ") for item in str(info).split(", "))
+        # regex = r"Steps:.*$"
+        # info = re.findall(regex, processed.info, re.M)[0]
+        # input_dict = dict(item.split(": ") for item in str(info).split(", "))
         # collection.hmset("RS:B:100:info", {"full": full, "info": info, "json": json.dumps(input_dict)})
         collection.hmset("RS:B:100:info", {"full": full})
 
