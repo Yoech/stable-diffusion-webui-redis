@@ -83,7 +83,7 @@ class Scripts(scripts.Script):
             print(f"image[{i}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
-            collection.hmset(str(prefix) + str(seed) + ":" + str(subseed), {"info": info, "path": path})
+            collection.hmset(str(prefix) + str(seed) + ":" + str(subseed), {"info": json.dumps(info), "path": path})
 
         full = processed.js()
         # print(f"postprocess --------------")
@@ -93,7 +93,7 @@ class Scripts(scripts.Script):
         # info = re.findall(regex, processed.info, re.M)[0]
         # input_dict = dict(item.split(": ") for item in str(info).split(", "))
         # collection.hmset("RS:B:100:info", {"full": full, "info": info, "json": json.dumps(input_dict)})
-        collection.hmset(str(prefix) + str(processed.seed), {"full": full})
+        collection.hmset(str(prefix) + str(processed.seed), {"info": full})
 
         print(f"postprocess ---> Save2Redis.completed!")
         return True
