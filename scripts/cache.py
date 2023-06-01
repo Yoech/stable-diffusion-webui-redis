@@ -69,10 +69,7 @@ class Scripts(scripts.Script):
         if len(processed.images) == len(processed.all_seeds) + 1:
             processed.images = processed.images[1:len(processed.images)]
             processed.infotexts = processed.infotexts[1:len(processed.infotexts)]
-            # print(f"------------>processed.images.length resize")
 
-        regex = r"Steps:.*$"
-        infoArr = re.findall(regex, processed.info, re.M)
         for i in range(len(processed.images)):
             image = processed.images[i]
             buffer = BytesIO()
@@ -81,7 +78,7 @@ class Scripts(scripts.Script):
             # base64_image = base64.b64encode(image_bytes).decode('ascii')
             seed = processed.all_seeds[i]
             subseed = processed.all_subseeds[i]
-            info = infoArr[i]
+            info = processed.infotexts[i]
             path = processed.path[i]
             print(f"image[{i}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
