@@ -39,9 +39,9 @@ class Scripts(scripts.Script):
                 with gr.Group():
                     with gr.Row():
                         # host = gr.inputs.Textbox(label="Host", default=redis_host)
-                        host = gr.Textbox(label="Host", value="Host Address")
+                        host = gr.Textbox(label="Host", value=redis_host)
                         # port = gr.inputs.Textbox(label="Port", default=redis_port)
-                        port = gr.Textbox(label="Port", value="what")
+                        port = gr.Textbox(label="Port", value=redis_port)
                         # db = gr.inputs.Textbox(label="db", default=redis_db)
                         db = gr.Textbox(label="Db", value=redis_db)
                         # password = gr.inputs.Textbox(label="Password", default=redis_auth)
