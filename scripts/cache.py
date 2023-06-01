@@ -60,20 +60,24 @@ class Scripts(scripts.Script):
         if collection is None:
             return True
 
-        print(f"------------>samples_format[{opts.samples_format}]")
-        print(f"------------>images[{len(processed.images)}].seeds[{len(processed.all_seeds)}].subseeds[{len(processed.all_subseeds)}]")
-        print(f"------------>info[{processed.info}]")
-        print(f"------------>infotexts[{processed.infotexts}]")
+        # print(f"------------>samples_format[{opts.samples_format}]")
+        # print(f"------------>images[{len(processed.images)}].seeds[{len(processed.all_seeds)}].subseeds[{len(processed.all_subseeds)}]")
+        # print(f"------------>info[{processed.info}]")
+        # print(f"------------>infotexts[{processed.infotexts}]")
 
         # opts.return_grid==true
         if len(processed.images) == len(processed.all_seeds) + 1:
             processed.images = processed.images[1:len(processed.images)]
             processed.infotexts = processed.infotexts[1:len(processed.infotexts)]
 
+        fmt = "png"
+        if opts.samples_format.toLowerCase() != "png":
+            fmt = opts.samples_format.toLowerCase()
+
         for i in range(len(processed.images)):
             image = processed.images[i]
             buffer = BytesIO()
-            image.save(buffer, "png")
+            image.save(buffer, fmt)
             image_bytes = buffer.getvalue()
             # base64_image = base64.b64encode(image_bytes).decode('ascii')
             seed = processed.all_seeds[i]
