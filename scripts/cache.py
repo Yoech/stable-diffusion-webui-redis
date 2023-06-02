@@ -44,15 +44,15 @@ class Scripts(scripts.Script):
         with gr.Group():
             with gr.Accordion("Redis Configure", open=True):
                 with gr.Row():
-                    _save = gr.Checkbox(label="enable", value=bool(redis_save_env))
+                    _save = gr.Checkbox(label="Enable", value=bool(redis_save_env))
                 with gr.Group():
                     with gr.Row():
-                        _host = gr.Textbox(label="host", value=str(redis_host_env))
-                        _port = gr.Textbox(label="port", value=str(redis_port_env))
-                        _db = gr.Textbox(label="database", value=str(redis_db_env))
-                        _auth = gr.Textbox(label="auth", value=str(redis_auth_env))
+                        _host = gr.Textbox(label="Host", value=str(redis_host_env))
+                        _port = gr.Textbox(label="Port", value=str(redis_port_env))
+                        _db = gr.Textbox(label="Database", value=str(redis_db_env))
+                        _auth = gr.Textbox(label="Auth", value=str(redis_auth_env))
                     with gr.Row():
-                        _prefix = gr.Textbox(label="path prefix", value=str(redis_prefix_env))
+                        _prefix = gr.Textbox(label="Path Prefix", value=str(redis_prefix_env))
         return [_save, _host, _port, _db, _auth, _prefix]
 
     def postprocess(self, p, processed, save, host, port, db, auth, prefix):
