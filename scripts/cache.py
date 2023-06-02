@@ -44,7 +44,7 @@ class Scripts(scripts.Script):
         with gr.Group():
             with gr.Accordion("Redis Configure", open=True):
                 with gr.Row():
-                    _save = gr.Checkbox(label="Enable", value=bool(redis_save_env))
+                    _save = gr.Checkbox(label="enable", value=bool(redis_save_env))
                 with gr.Group():
                     with gr.Row():
                         _host = gr.Textbox(label="host", value=str(redis_host_env))
