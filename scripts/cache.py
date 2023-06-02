@@ -70,14 +70,10 @@ class Scripts(scripts.Script):
             processed.images = processed.images[1:len(processed.images)]
             processed.infotexts = processed.infotexts[1:len(processed.infotexts)]
 
-        fmt = "png"
-        if opts.samples_format.lower() != "png":
-            fmt = opts.samples_format.lower()
-
         for i in range(len(processed.images)):
             image = processed.images[i]
             buffer = BytesIO()
-            image.save(buffer, fmt)
+            image.save(buffer, "png")
             image_bytes = buffer.getvalue()
             # base64_image = base64.b64encode(image_bytes).decode('ascii')
             seed = processed.all_seeds[i]
@@ -87,7 +83,7 @@ class Scripts(scripts.Script):
             key = path.replace("/", ":")
             arr = key.split(":")
             realkey = ':'.join(arr[:len(arr) - 1])
-            print(f"image[{i}].realkey={realkey}.seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
+            print(f"image[{i}].realkey=[{realkey}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
             collection.hmset(str(prefix) + realkey + ":" + str(seed) + ":" + str(subseed), {"params": info, "path": path})
