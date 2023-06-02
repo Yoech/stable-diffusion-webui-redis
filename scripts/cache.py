@@ -80,21 +80,29 @@ class Scripts(scripts.Script):
             # subseed = processed.all_subseeds[i]
             info = processed.infotexts[i]
             path = processed.path[i]
-            
+
+            # Settings -> Saving images/grids -> Images filename pattern -> [datetime<%Y%m%d_%H%M%S>]_[seed]_[model_hash]
+            # Unclick all checkbox
+            # Only click checkbox like:
+            # 'Always save all generated images'
+            # 'Do not save grids consisting of one picture'
+            # 'Save text information about generation parameters as chunks to png files'
+            # 'If the saved image file size is above the limit, or its either width or height are above the limit, save a downscaled copy as JPG'
+            # 'Use original name for output filename during batch process in extras tab'
+            # 'When using 'Save' button, only save a single selected image'
+
             # outputs/txt2img-images/2023-06-02/20230602_061753_2114655488_fc2511737a.jpg
             arr = path.split("/")
-            if len(arr)!=4:
+            if len(arr) != 4:
                 print(f"not enough delimiters[/][{len(arr)}]")
                 return True
 
             # outputs/txt2img-images
             frontkey = ':'.join(arr[:len(arr) - 2])
-            print(f"frontkey={frontkey}")
-            
-            # Images filename pattern => [datetime<%Y%m%d_%H%M%S>]_[seed]_[model_hash]
+
             # 20230602_061753_2114655488_fc2511737a.jpg
-            lastarr = ''.join(arr[len(arr)-1:]).split(".")[0].split("_")
-            if len(lastarr)!=4:
+            lastarr = ''.join(arr[len(arr) - 1:]).split(".")[0].split("_")
+            if len(lastarr) != 4:
                 print(f"not enough delimiters[_][{len(lastarr)}]")
                 return True
 
@@ -104,16 +112,15 @@ class Scripts(scripts.Script):
 
             hour = lastarr[1][0:2]
             minute = lastarr[1][2:4]
-            #second = lastarr[1][4:6]
+            # second = lastarr[1][4:6]
 
             seed = lastarr[2]
             mdlhash = lastarr[3]
 
-            endkey = '{}:{}:{}:{}:{}:{}:{}'.format(year,month,day,hour,minute,mdlhash,seed)
-            print(f"endkey={endkey}")
-            
+            endkey = '{}:{}:{}:{}:{}:{}:{}'.format(year, month, day, hour, minute, mdlhash, seed)
+
             realkey = str(prefix) + frontkey + ":" + endkey
-            
+
             print(f"image[{i}].realkey[{realkey}].seeds[{seed}].bytes_size[{len(image_bytes)}].head[{image_bytes[:16].hex(' ')}].tail[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
