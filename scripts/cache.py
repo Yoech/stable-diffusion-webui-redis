@@ -85,10 +85,10 @@ class Scripts(scripts.Script):
             print(f"image[{i}].realkey[{realkey}].seeds[{seed}].bytes_size[{len(image_bytes)}].head[{image_bytes[:16].hex(' ')}].tail[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
-            if p.mdl is None:
+            if processed.mdl is None:
                 collection.hmset(realkey, {"m": "", "p": info, "u": path})
             else:
-                collection.hmset(realkey, {"m": p.mdl, "p": info, "u": path})
+                collection.hmset(realkey, {"m": processed.mdl, "p": info, "u": path})
 
         # full = processed.js()
         # # print(f"postprocess --------------")
