@@ -80,8 +80,7 @@ class Scripts(scripts.Script):
             subseed = processed.all_subseeds[i]
             info = processed.infotexts[i]
             path = processed.path[i]
-            key = path.replace("/", ":")
-            arr = key.split(":")
+            arr = path.replace("/", ":").split(":")
             realkey = ':'.join(arr[:len(arr) - 1])
             print(f"image[{i}].realkey=[{realkey}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
