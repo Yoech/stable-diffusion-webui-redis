@@ -62,8 +62,8 @@ class Scripts(scripts.Script):
 
         # print(f"------------>samples_format[{opts.samples_format}]")
         # print(f"------------>images[{len(processed.images)}].seeds[{len(processed.all_seeds)}].subseeds[{len(processed.all_subseeds)}]")
-        print(f"------------>info[{processed.info}]")
-        print(f"------------>infotexts[{processed.infotexts}]")
+        # print(f"------------>info[{processed.info}]")
+        # print(f"------------>infotexts[{processed.infotexts}]")
 
         # opts.return_grid==true
         if len(processed.images) == len(processed.all_seeds) + 1:
@@ -84,10 +84,13 @@ class Scripts(scripts.Script):
             subseed = processed.all_subseeds[i]
             info = processed.infotexts[i]
             path = processed.path[i]
-            print(f"image[{i}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
+            key = path.replace("/", ":")
+            arr = key.split(":")
+            realkey = ':'.join(arr[:len(arr) - 1])
+            print(f"image[{i}].realkey={realkey}.seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
-            collection.hmset(str(prefix) + str(seed) + ":" + str(subseed), {"params": info, "path": path})
+            collection.hmset(str(prefix) + realkey + ":" + str(seed) + ":" + str(subseed), {"params": info, "path": path})
 
         full = processed.js()
         # print(f"postprocess --------------")
