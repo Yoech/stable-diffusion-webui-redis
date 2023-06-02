@@ -85,7 +85,7 @@ class Scripts(scripts.Script):
             print(f"image[{i}].realkey=[{realkey}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
-            collection.hmset(str(prefix) + realkey + ":" + str(seed) + ":" + str(subseed), {"mdl": self.mdl, "params": info, "path": path})
+            collection.hmset(str(prefix) + realkey + ":" + str(seed) + ":" + str(subseed), {"mdl": p.mdl, "params": info, "path": path})
 
         # full = processed.js()
         # # print(f"postprocess --------------")
