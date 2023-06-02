@@ -82,19 +82,37 @@ class Scripts(scripts.Script):
             path = processed.path[i]
             
             # outputs/txt2img-images/2023-06-02/20230602_061753_2114655488_fc2511737a.jpg
-            arr = path.replace("/", ":").split(":")
-            frontkey = ':'.join(arr[:len(arr) - 1])
+            arr = path.split("/")
+            if len(arr)!=4:
+                print(f"not enough delimiters[/][{len(arr)}]")
+                return True
+
+            # outputs/txt2img-images
+            frontkey = ':'.join(arr[:len(arr) - 2])
             print(f"frontkey={frontkey}")
             
             # Images filename pattern => [datetime<%Y%m%d_%H%M%S>]_[seed]_[model_hash]
             # 20230602_061753_2114655488_fc2511737a.jpg
-            lastarr = arr[len(arr)-2:].split(".")[0]
-            print(f"lastarr={lastarr}")
-            
-            endkey = ':'.join(lastarr[len(lastarr)-1:])
+            lastarr = ''.join(arr[len(arr)-1:]).split(".")[0].split("_")
+            if len(lastarr)!=4:
+                print(f"not enough delimiters[_][{len(lastarr)}]")
+                return True
+
+            year = lastarr[0][0:4]
+            month = lastarr[0][4:6]
+            day = lastarr[0][6:8]
+
+            hour = lastarr[1][0:2]
+            minute = lastarr[1][2:4]
+            #second = lastarr[1][4:6]
+
+            seed = lastarr[2]
+            mdlhash = lastarr[3]
+
+            endkey = '{}:{}:{}:{}:{}:{}:{}'.format(year,month,day,hour,minute,mdlhash,seed)
             print(f"endkey={endkey}")
             
-            realkey = str(prefix) + frontkey + ":" + endkey + str(seed)
+            realkey = str(prefix) + frontkey + ":" + endkey
             
             print(f"image[{i}].realkey[{realkey}].seeds[{seed}].bytes_size[{len(image_bytes)}].head[{image_bytes[:16].hex(' ')}].tail[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
