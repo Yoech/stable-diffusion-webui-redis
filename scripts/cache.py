@@ -52,7 +52,7 @@ class Scripts(scripts.Script):
                         _db = gr.Textbox(label="database", value=str(redis_db_env))
                         _auth = gr.Textbox(label="auth", value=str(redis_auth_env))
                     with gr.Row():
-                        _prefix = gr.Textbox(label="path prefix", value=str(redis_prefix_env))
+                        _prefix = gr.Textbox(label="key path prefix", info="redis key path prefix", value=str(redis_prefix_env))
         return [_save, _host, _port, _db, _auth, _prefix]
 
     def postprocess(self, p, processed, save, host, port, db, auth, prefix):
