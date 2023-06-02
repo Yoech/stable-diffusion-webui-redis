@@ -81,15 +81,19 @@ class Scripts(scripts.Script):
             info = processed.infotexts[i]
             path = processed.path[i]
 
+            # Usage:
             # Settings -> Saving images/grids -> Images filename pattern -> [datetime<%Y%m%d_%H%M%S>]_[seed]_[model_hash]
-            # Unclick all checkbox
-            # Only click checkbox like:
+            # Unclick all checkbox,Only click following checkbox:
             # 'Always save all generated images'
             # 'Do not save grids consisting of one picture'
             # 'Save text information about generation parameters as chunks to png files'
             # 'If the saved image file size is above the limit, or its either width or height are above the limit, save a downscaled copy as JPG'
             # 'Use original name for output filename during batch process in extras tab'
             # 'When using 'Save' button, only save a single selected image'
+
+            # Settings -> Saving to a directory -> Directory name pattern -> [date]
+            # Unclick all checkbox,Only click following checkbox:
+            # 'Save images to a subdirectory'
 
             # outputs/txt2img-images/2023-06-02/20230602_061753_2114655488_fc2511737a.jpg
             arr = path.split("/")
