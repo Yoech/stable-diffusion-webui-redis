@@ -80,8 +80,22 @@ class Scripts(scripts.Script):
             # subseed = processed.all_subseeds[i]
             info = processed.infotexts[i]
             path = processed.path[i]
+            
+            # outputs/txt2img-images/2023-06-02/20230602_061753_2114655488_fc2511737a.jpg
             arr = path.replace("/", ":").split(":")
-            realkey = str(prefix) + ':'.join(arr[:len(arr) - 1]) + ":" + str(seed)
+            frontkey = ':'.join(arr[:len(arr) - 1])
+            print(f"frontkey={frontkey}")
+            
+            # Images filename pattern => [datetime<%Y%m%d_%H%M%S>]_[seed]_[model_hash]
+            # 20230602_061753_2114655488_fc2511737a.jpg
+            lastarr = arr[len(arr)-2:].split(".")[0]
+            print(f"lastarr={lastarr}")
+            
+            endkey = ':'.join(lastarr[len(lastarr)-1:])
+            print(f"endkey={endkey}")
+            
+            realkey = str(prefix) + frontkey + ":" + endkey + str(seed)
+            
             print(f"image[{i}].realkey[{realkey}].seeds[{seed}].bytes_size[{len(image_bytes)}].head[{image_bytes[:16].hex(' ')}].tail[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
