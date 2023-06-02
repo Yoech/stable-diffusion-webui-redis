@@ -77,15 +77,18 @@ class Scripts(scripts.Script):
             image_bytes = buffer.getvalue()
             # base64_image = base64.b64encode(image_bytes).decode('ascii')
             seed = processed.all_seeds[i]
-            subseed = processed.all_subseeds[i]
+            # subseed = processed.all_subseeds[i]
             info = processed.infotexts[i]
             path = processed.path[i]
             arr = path.replace("/", ":").split(":")
-            realkey = ':'.join(arr[:len(arr) - 1])
-            print(f"image[{i}].realkey=[{realkey}].seeds={seed}.subseed={subseed}.bytes_size={len(image_bytes)}.head=[{image_bytes[:16].hex(' ')}].tail=[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
+            realkey = str(prefix) + ':'.join(arr[:len(arr) - 1]) + ":" + str(seed)
+            print(f"image[{i}].realkey[{realkey}].seeds[{seed}].bytes_size[{len(image_bytes)}].head[{image_bytes[:16].hex(' ')}].tail[{image_bytes[len(image_bytes) - 20:len(image_bytes) - 12].hex(' ')}]")
             # collection.hmset("RS:B:100:image", {"image": base64_image})
             # collection.hmset("RS:B:100:image:" + str(i), {str(seed): image_bytes})
-            collection.hmset(str(prefix) + realkey + ":" + str(seed) + ":" + str(subseed), {"mdl": p.mdl, "params": info, "path": path})
+            if p.mdl is None:
+                collection.hmset(realkey, {"m": "", "p": info, "u": path})
+            else:
+                collection.hmset(realkey, {"m": p.mdl, "p": info, "u": path})
 
         # full = processed.js()
         # # print(f"postprocess --------------")
