@@ -47,13 +47,14 @@ class Scripts(scripts.Script):
                     _save = gr.Checkbox(label="enable", value=bool(redis_save_env))
                 with gr.Group():
                     with gr.Row():
-                        _host = gr.Textbox(label="host", value=str(redis_host_env))
-                        _port = gr.Textbox(label="port", value=str(redis_port_env))
-                        _db = gr.Textbox(label="database", value=str(redis_db_env))
-                        _auth = gr.Textbox(label="auth", value=str(redis_auth_env))
+                        _host = gr.Textbox(label="redis host", value=str(redis_host_env))
+                        _port = gr.Textbox(label="redis port", value=str(redis_port_env))
+                        _db = gr.Textbox(label="redis database index", value=str(redis_db_env))
+                        _auth = gr.Textbox(label="redis password", value=str(redis_auth_env))
                     with gr.Row():
-                        _prefix = gr.Textbox(label="key path prefix", info="redis key path prefix, e.g: MM:NN:", value=str(redis_prefix_env))
+                        _prefix = gr.Textbox(label="redis key path prefix", info="e.g: MM:NN:", value=str(redis_prefix_env))
         return [_save, _host, _port, _db, _auth, _prefix]
+
 
     def postprocess(self, p, processed, save, host, port, db, auth, prefix):
         collection = get_collection(host, port, db, auth) if save else None
