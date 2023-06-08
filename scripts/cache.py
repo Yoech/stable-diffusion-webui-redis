@@ -55,7 +55,6 @@ class Scripts(scripts.Script):
                         _prefix = gr.Textbox(label="redis key path prefix", info="e.g: MM:NN:", value=str(redis_prefix_env))
         return [_save, _host, _port, _db, _auth, _prefix]
 
-
     def postprocess(self, p, processed, save, host, port, db, auth, prefix):
         collection = get_collection(host, port, db, auth) if save else None
         if collection is None:
@@ -117,12 +116,12 @@ class Scripts(scripts.Script):
 
             hour = lastarr[1][0:2]
             minute = lastarr[1][2:4]
-            # second = lastarr[1][4:6]
+            second = lastarr[1][4:6]
 
             seed = lastarr[2]
             mdlhash = lastarr[3]
 
-            endkey = '{}:{}:{}:{}:{}:{}:{}'.format(year, month, day, hour, minute, mdlhash, seed)
+            endkey = '{}:{}:{}:{}:{}:{}:{}:{}'.format(year, month, day, hour, minute, second, mdlhash, seed)
 
             realkey = str(prefix) + frontkey + ":" + endkey
 
